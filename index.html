@@ -1,0 +1,1905 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>第13回伊那市ビギナーズバドミントン交流会 参加申込フォーム</title>
+
+    <!-- Google Fonts: Noto Sans JP & Outfit (英数字用) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700&family=Outfit:wght@400;600&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* ==========================================================================
+           1. デザインシステム & 基本設定 (画面表示用)
+           ========================================================================== */
+        :root {
+            --bg-color: #f3f4f6;
+            /* 薄いグレー */
+            --card-bg: #ffffff;
+            /* 純白カード */
+            --primary: #0284c7;
+            /* バドミントンの爽快感をイメージしたスカイブルー */
+            --primary-hover: #0369a1;
+            --text-dark: #1f2937;
+            --text-light: #4b5563;
+            --border-color: #d1d5db;
+            --focus-ring: rgba(2, 132, 199, 0.25);
+            --error-color: #ef4444;
+            --success-color: #10b981;
+            --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Noto Sans JP', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-dark);
+            line-height: 1.6;
+            padding: 2rem 1rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1100px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            box-shadow: var(--shadow-lg);
+            padding: 2.5rem;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        /* 装飾的な背景グラデーションバー */
+        .container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: linear-gradient(90deg, #0284c7, #0d9488);
+        }
+
+        /* ==========================================================================
+           2. タイトル & ヘッダー
+           ========================================================================== */
+        header {
+            text-align: center;
+            margin-bottom: 2.5rem;
+        }
+
+        h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.025em;
+        }
+
+        .subtitle {
+            font-size: 0.95rem;
+            color: var(--text-light);
+        }
+
+        /* ==========================================================================
+           3. 責任者情報入力欄 (2カラムグリッド)
+           ========================================================================== */
+        .section-title {
+            font-size: 1.15rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1.25rem;
+            padding-left: 0.75rem;
+            border-left: 4px solid var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .responsibility-group {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+            margin-bottom: 2.5rem;
+            background: #f9fafb;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid #e5e7eb;
+        }
+
+        .form-control {
+            display: flex;
+            flex-direction: column;
+            gap: 0.375rem;
+        }
+
+        .form-control.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-dark);
+        }
+
+        input[type="text"],
+        input[type="email"],
+        input[type="tel"],
+        select {
+            width: 100%;
+            padding: 0.625rem 0.875rem;
+            font-size: 0.95rem;
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            background-color: #ffffff;
+            transition: all 0.2s ease;
+            color: var(--text-dark);
+        }
+
+        input[type="text"]:focus,
+        input[type="email"]:focus,
+        input[type="tel"]:focus,
+        select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px var(--focus-ring);
+        }
+
+        input.invalid,
+        select.invalid {
+            border-color: var(--error-color);
+            background-color: #fef2f2;
+        }
+
+        input.invalid:focus {
+            box-shadow: 0 0 0 3px rgba(239, 68, 68, 0.2);
+        }
+
+        .error-message {
+            font-size: 0.75rem;
+            color: var(--error-color);
+            display: none;
+            margin-top: 0.125rem;
+        }
+
+        input.invalid+.error-message {
+            display: block;
+        }
+
+        /* ==========================================================================
+           4. 参加者名簿テーブル (No.1〜8)
+           ========================================================================== */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin-bottom: 2rem;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+            font-size: 0.9rem;
+            min-width: 900px;
+            /* 横スクロール対応の最低幅 */
+        }
+
+        th {
+            background-color: #f8fafc;
+            color: var(--text-dark);
+            font-weight: 600;
+            padding: 0.75rem 1rem;
+            border-bottom: 2px solid #e5e7eb;
+            font-size: 0.85rem;
+        }
+
+        td {
+            padding: 0.5rem 0.75rem;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: middle;
+        }
+
+        /* ペアごとに行の背景色を交互に変更 */
+        tbody tr.pair-group-odd {
+            background-color: #ffffff;
+        }
+
+        tbody tr.pair-group-even {
+            background-color: #f9fafb;
+        }
+
+        .no-column {
+            text-align: center;
+            vertical-align: middle;
+            font-weight: 700;
+            color: var(--text-light);
+            width: 50px;
+            font-family: 'Outfit', sans-serif;
+            font-size: 1.1rem;
+        }
+
+        .pair-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            display: block;
+            margin-top: 2px;
+        }
+
+        .input-pair-cell {
+            display: flex;
+            flex-direction: column;
+            gap: 0.35rem;
+        }
+
+        .participant-input {
+            padding: 0.5rem 0.75rem;
+            font-size: 0.85rem;
+            border-radius: 6px;
+        }
+
+        /* ==========================================================================
+           5. 下部自動計算 & 合計金額表示
+           ========================================================================== */
+        .summary-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: #f0fdf4;
+            /* 爽やかなライトグリーン */
+            border: 1px solid #bbf7d0;
+            padding: 1.5rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .summary-notes {
+            font-size: 0.85rem;
+            color: #166534;
+        }
+
+        .summary-notes p {
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-calculation {
+            text-align: right;
+        }
+
+        .calc-formula {
+            font-size: 0.95rem;
+            color: #166534;
+            font-weight: 500;
+        }
+
+        .calc-total {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #14532d;
+            margin-top: 0.25rem;
+        }
+
+        .amount-num {
+            font-family: 'Outfit', sans-serif;
+            font-size: 2rem;
+        }
+
+        /* ==========================================================================
+           6. 操作アクションボタン
+           ========================================================================== */
+        .actions-group {
+            display: flex;
+            justify-content: flex-end;
+            gap: 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0.75rem 1.5rem;
+            font-size: 0.95rem;
+            font-weight: 600;
+            border-radius: 8px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            gap: 0.5rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.4);
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+            transform: translateY(-1px);
+        }
+
+        .btn-secondary {
+            background-color: #374151;
+            color: #ffffff;
+            box-shadow: 0 4px 6px -1px rgba(55, 65, 81, 0.4);
+        }
+
+        .btn-secondary:hover {
+            background-color: #1f2937;
+            transform: translateY(-1px);
+        }
+
+        /* アイコン風SVGスタイル */
+        .btn svg {
+            width: 1.25rem;
+            height: 1.25rem;
+            fill: currentColor;
+        }
+
+        /* ==========================================================================
+           7. 送信中ローディング UI & 完了画面
+           ========================================================================== */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(4px);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .loading-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #e5e7eb;
+            border-top-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .loading-text {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+
+        /* サンクスページ UI */
+        .thanks-container {
+            display: none;
+            text-align: center;
+            padding: 3rem 1rem;
+        }
+
+        .thanks-container.active {
+            display: block;
+            animation: fadeIn 0.5s ease forwards;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .success-icon {
+            width: 72px;
+            height: 72px;
+            background: #d1fae5;
+            color: var(--success-color);
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .success-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: currentColor;
+        }
+
+        .thanks-title {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .thanks-text {
+            font-size: 1rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto 2rem auto;
+            line-height: 1.7;
+        }
+
+        .thanks-summary {
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            padding: 1.5rem;
+            border-radius: 12px;
+            max-width: 500px;
+            margin: 0 auto 2rem auto;
+            text-align: left;
+        }
+
+        .thanks-summary table {
+            min-width: 100%;
+        }
+
+        .thanks-summary th,
+        .thanks-summary td {
+            padding: 0.5rem;
+            border: none;
+        }
+
+        .thanks-summary th {
+            font-weight: 600;
+            color: var(--text-light);
+            width: 120px;
+            text-align: left;
+            background: transparent;
+        }
+
+        /* モバイル対応 (スマートフォン等の小画面デバイス向け入力最適化) */
+        @media (max-width: 768px) {
+            .responsibility-group {
+                grid-template-columns: 1fr;
+            }
+
+            .form-control.full-width {
+                grid-column: span 1;
+            }
+
+            .summary-container {
+                flex-direction: column;
+                gap: 1.25rem;
+                align-items: flex-start;
+                padding: 1.25rem;
+            }
+
+            .summary-calculation {
+                width: 100%;
+                text-align: left;
+                border-top: 1px solid #bbf7d0;
+                padding-top: 1rem;
+            }
+
+            .actions-group {
+                flex-direction: column-reverse;
+            }
+
+            .btn {
+                width: 100%;
+            }
+
+            /* --- 名簿テーブルのスマートフォン最適化 (ブロック＆カード化) --- */
+            .table-container {
+                border: none;
+                background: transparent;
+                box-shadow: none;
+                padding: 0;
+            }
+
+            .table-container table {
+                display: block;
+                border: none;
+            }
+
+            .table-container thead {
+                display: none; /* スマホ時は2次元ヘッダーを非表示 */
+            }
+
+            .table-container tbody {
+                display: block;
+            }
+
+            /* 各メンバー行を独立した「入力カード」に変換 */
+            .table-container tr.participant-row {
+                display: block;
+                background: var(--bg-card);
+                border: 1px solid var(--border-color);
+                border-radius: 10px;
+                padding: 1.25rem;
+                margin-bottom: 1.25rem;
+                box-shadow: 0 4px 6px rgba(0, 0, 0, 0.03);
+            }
+
+            /* ペアグループごとの視覚的な境界（左線の色分け） */
+            .table-container tr.pair-group-odd {
+                border-left: 4px solid var(--primary);
+            }
+            .table-container tr.pair-group-even {
+                border-left: 4px solid var(--secondary);
+            }
+
+            /* スマホ表示時は元のNo.列（セル自体）を完全に非表示 */
+            .table-container td.no-column {
+                display: none !important;
+            }
+
+            /* 1人目のカード上部に共通デザインで見出しをCSS生成表示 */
+            .table-container tr[data-member="1"] {
+                position: relative;
+                padding-top: 2.75rem !important; /* タイトル用の余白を確保 */
+            }
+            .table-container tr[data-member="1"]::before {
+                content: "ペア No. " attr(data-pair) " - 1人目";
+                position: absolute;
+                top: 0.75rem;
+                left: 1.25rem;
+                right: 1.25rem;
+                padding-bottom: 0.75rem;
+                border-bottom: 1px solid var(--border-color);
+                font-size: 1.05rem;
+                color: var(--primary);
+                font-weight: 800;
+                display: block;
+            }
+
+            /* 2人目のカード上部に共通デザインで見出しをCSS生成表示 */
+            .table-container tr[data-member="2"] {
+                position: relative;
+                padding-top: 2.75rem !important; /* タイトル用の余白を確保 */
+            }
+            .table-container tr[data-member="2"]::before {
+                content: "ペア No. " attr(data-pair) " - 2人目";
+                position: absolute;
+                top: 0.75rem;
+                left: 1.25rem;
+                right: 1.25rem;
+                padding-bottom: 0.75rem;
+                border-bottom: 1px solid var(--border-color);
+                font-size: 1.05rem;
+                color: var(--primary);
+                font-weight: 800;
+                display: block;
+            }
+
+            /* 各セルをブロック要素化し横スクロールを完全に排除 */
+            .table-container td {
+                display: block;
+                width: 100% !important;
+                padding: 0.5rem 0 !important;
+                border: none !important;
+                background: transparent !important;
+                text-align: left !important;
+            }
+
+            /* 疑似要素でセルの上に各項目のラベルを表示 */
+            .table-container td::before {
+                font-weight: 700;
+                font-size: 0.8rem;
+                color: var(--text-light);
+                display: block;
+                margin-bottom: 0.35rem;
+            }
+
+            /* 1人目のメンバー用の項目ラベル */
+            .table-container tr[data-member="1"] td:nth-child(2)::before {
+                content: "フリガナ ／ 氏名";
+            }
+            .table-container tr[data-member="1"] td:nth-child(3)::before {
+                content: "性別";
+            }
+            .table-container tr[data-member="1"] td:nth-child(4)::before {
+                content: "生年月日 (例: 1995/04/01)";
+            }
+            .table-container tr[data-member="1"] td:nth-child(5)::before {
+                content: "団体名または所属先 (ない場合は自由に)";
+            }
+
+            /* 2人目のメンバー用の項目ラベル */
+            .table-container tr[data-member="2"] td:nth-child(1)::before {
+                content: "フリガナ ／ 氏名";
+            }
+            .table-container tr[data-member="2"] td:nth-child(2)::before {
+                content: "性別";
+            }
+            .table-container tr[data-member="2"] td:nth-child(3)::before {
+                content: "生年月日 (例: 1995/04/01)";
+            }
+            .table-container tr[data-member="2"] td:nth-child(4)::before {
+                content: "団体名または所属先 (ない場合は自由に)";
+            }
+
+            /* フリガナと氏名の入力エリアを縦に並べて押しやすさを向上 */
+            .input-pair-cell {
+                flex-direction: column;
+                gap: 0.4rem;
+            }
+
+            /* 各入力フォームの高さやパディングをスマホ用に拡大 (タップ領域の確保) */
+            .participant-input {
+                width: 100% !important;
+                box-sizing: border-box;
+                height: 44px; /* 指でタップしやすいモダンなサイズ */
+                padding: 0.6rem 0.85rem !important;
+                font-size: 0.9rem !important;
+            }
+        }
+
+        /* ==========================================================================
+           8. 印刷用スタイル (PDF & A4用紙への完璧なレイアウト再現)
+           ========================================================================== */
+        @media print {
+            @page {
+                size: A4 portrait;
+                margin: 6mm 10mm 6mm 10mm;
+                /* A4にピッタリ収まる余白設定 */
+            }
+
+            body {
+                background: #ffffff !important;
+                color: #000000 !important;
+                font-family: "MS Mincho", "Hiragino Mincho ProN", "Noto Serif JP", serif;
+                padding: 0 !important;
+                margin: 0 !important;
+                font-size: 10pt;
+                line-height: 1.25;
+            }
+
+            /* 不要なWeb UI要素をすべて非表示 */
+            .container::before,
+            header .subtitle,
+            .btn,
+            .actions-group,
+            .error-message,
+            .responsibility-group label,
+            .section-title span,
+            .loading-overlay,
+            .thanks-container {
+                display: none !important;
+            }
+
+            .container {
+                box-shadow: none !important;
+                padding: 0 !important;
+                border-radius: 0 !important;
+                background: transparent !important;
+                max-width: 100% !important;
+                width: 100% !important;
+                display: block !important;
+            }
+
+            #application-form {
+                display: block !important;
+            }
+
+            /* 元のPDFのタイトル再現 */
+            header {
+                margin-bottom: 10px !important;
+                text-align: center !important;
+            }
+
+            h1 {
+                font-size: 17pt !important;
+                font-weight: bold !important;
+                color: #000000 !important;
+                border: none !important;
+                margin: 0 0 2px 0 !important;
+                text-decoration: none !important;
+                font-family: "MS Gothic", "Hiragino Kaku Gothic ProN", sans-serif;
+            }
+
+            /* 責任者情報入力欄を元のPDFにそっくりな極細罫線の表形式に再配置 */
+            .section-title {
+                display: none !important;
+                /* 印刷時は不要 */
+            }
+
+            .responsibility-group {
+                display: table !important;
+                width: 80% !important;
+                margin: 0 auto 10px auto !important;
+                padding: 0 !important;
+                background: transparent !important;
+                border-collapse: collapse !important;
+                border: none !important;
+            }
+
+            .form-control {
+                display: table-row !important;
+            }
+
+            /* 各入力フィールドの擬似ラベルと枠線 */
+            .form-control::before {
+                display: table-cell !important;
+                padding: 2px 4px !important;
+                font-weight: bold !important;
+                font-size: 9.5pt !important;
+                text-align: center !important;
+                vertical-align: middle !important;
+                width: 110px !important;
+                border: 1px solid #000000 !important;
+                background-color: transparent !important;
+            }
+
+            .form-control:nth-child(1)::before {
+                content: "団体名" !important;
+            }
+
+            .form-control:nth-child(2)::before {
+                content: "住所" !important;
+            }
+
+            .form-control:nth-child(3)::before {
+                content: "氏名" !important;
+            }
+
+            .form-control:nth-child(4)::before {
+                content: "電話番号" !important;
+            }
+
+            .form-control:nth-child(5)::before {
+                content: "E-mail" !important;
+            }
+
+            .form-control input {
+                display: table-cell !important;
+                border: 1px solid #000000 !important;
+                border-left: none !important;
+                border-radius: 0 !important;
+                padding: 2px 4px !important;
+                font-size: 10pt !important;
+                background: transparent !important;
+                box-shadow: none !important;
+                outline: none !important;
+                width: 100% !important;
+                height: 22px !important;
+            }
+
+            /* テーブルの印刷レイアウトの徹底調整 */
+            .table-container {
+                border: none !important;
+                border-radius: 0 !important;
+                box-shadow: none !important;
+                margin-bottom: 10px !important;
+                overflow: visible !important;
+            }
+
+            table {
+                min-width: 100% !important;
+                width: 100% !important;
+                border-collapse: collapse !important;
+                border: 2px solid #000000 !important;
+            }
+
+            th,
+            td {
+                border: 1px solid #000000 !important;
+                color: #000000 !important;
+                padding: 1px 3px !important;
+                font-size: 8.5pt !important;
+                height: 20px !important;
+                background: transparent !important;
+            }
+
+            th {
+                text-align: center !important;
+                font-weight: bold !important;
+                vertical-align: middle !important;
+            }
+
+            /* PDFのヘッダー高さの再現 */
+            thead th {
+                height: 18px !important;
+            }
+
+            /* ペア行のNoセル結合の枠線制御 */
+            .no-column {
+                font-size: 10pt !important;
+                font-weight: bold !important;
+                text-align: center !important;
+                vertical-align: middle !important;
+                width: 30px !important;
+            }
+
+            /* テーブル内インプットの印刷用透明化 */
+            .participant-input {
+                border: none !important;
+                border-radius: 0 !important;
+                padding: 0 3px !important;
+                font-size: 8.5pt !important;
+                background: transparent !important;
+                width: 100% !important;
+                height: 18px !important;
+                box-shadow: none !important;
+            }
+
+            /* フリガナと氏名の区切り線 */
+            .input-pair-cell {
+                gap: 0 !important;
+            }
+
+            .input-pair-cell input:first-child {
+                border-bottom: 1px dashed #555555 !important;
+                border-radius: 0 !important;
+            }
+
+            /* 性別プルダウンの印刷最適化（枠線を消してテキストだけ見せる） */
+            select.participant-input {
+                appearance: none !important;
+                -webkit-appearance: none !important;
+                -moz-appearance: none !important;
+                text-align: center !important;
+                text-align-last: center !important;
+                padding-right: 0 !important;
+            }
+
+            /* 下部自動計算 & 合計金額表示 */
+            .summary-container {
+                background: transparent !important;
+                border: none !important;
+                padding: 0 !important;
+                margin-top: 6px !important;
+                margin-bottom: 6px !important;
+                display: block !important;
+                position: relative !important;
+            }
+
+            .summary-notes {
+                font-size: 8.5pt !important;
+                color: #000000 !important;
+                float: left !important;
+                width: 60% !important;
+            }
+
+            .summary-calculation {
+                float: right !important;
+                width: 38% !important;
+                text-align: right !important;
+                font-size: 10pt !important;
+                color: #000000 !important;
+            }
+
+            .calc-formula {
+                font-size: 10pt !important;
+                color: #000000 !important;
+            }
+
+            /* PDFの「参加料 1人 1,500円×（人数）人 ＝ （合計）円」の再現 */
+            .calc-formula::before {
+                content: "参加料　1人 1,500円× " !important;
+                font-weight: bold !important;
+            }
+
+            .calc-formula span {
+                text-decoration: underline !important;
+                font-weight: bold !important;
+                padding: 0 2px !important;
+            }
+
+            .calc-formula::after {
+                content: " 人 ＝" !important;
+                font-weight: bold !important;
+            }
+
+            .calc-total {
+                font-size: 10pt !important;
+                font-weight: bold !important;
+                color: #000000 !important;
+                margin-top: 2px !important;
+                display: inline-block !important;
+            }
+
+            .calc-total span {
+                text-decoration: underline !important;
+                font-size: 11.5pt !important;
+                padding: 0 4px !important;
+            }
+
+            .calc-total::after {
+                content: " 円" !important;
+            }
+
+            /* 不要な文字を打ち消し */
+            .calc-total-text {
+                display: none !important;
+            }
+
+            /* clearfix */
+            .summary-container::after {
+                content: "" !important;
+                display: table !important;
+                clear: both !important;
+            }
+
+            /* 元のPDFのフッター「1 2」を完璧に再現 */
+            .print-footer-number {
+                display: block !important;
+                text-align: center !important;
+                font-size: 12pt !important;
+                font-family: "Outfit", sans-serif;
+                margin-top: 10px !important;
+                letter-spacing: 0.5em !important;
+                font-weight: bold !important;
+            }
+        }
+
+        .print-footer-number {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- 送信中ローディングスクリーン -->
+    <div id="loading-screen" class="loading-overlay">
+        <div class="spinner"></div>
+        <div class="loading-text">データを送信しています...</div>
+    </div>
+
+    <div id="form-container" class="container">
+        <header>
+            <h1>第13回伊那市ビギナーズバドミントン交流会 参加申込書</h1>
+            <p class="subtitle">必要事項を入力し、画面右下の「印刷・PDF保存」または「送信する」ボタンを押してください。</p>
+        </header>
+
+        <!-- 送信完了のサンクスページ表示用コンテナ -->
+        <div id="thanks-screen" class="thanks-container">
+            <div class="success-icon">
+                <svg viewBox="0 0 24 24">
+                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z" />
+                </svg>
+            </div>
+            <h2 class="thanks-title">送信が完了しました！</h2>
+            <p class="thanks-text">
+                ご入力いただいた内容はGoogleスプレッドシートに正常に保存されました。<br>
+                また、責任者様のメールアドレス宛てに、元の申込書PDFを添付した「申込完了控えメール」を自動送信いたしました。ご確認ください。
+            </p>
+            <div class="thanks-summary">
+                <h3
+                    style="font-size: 1rem; border-bottom: 1px solid #e5e7eb; padding-bottom: 0.5rem; margin-bottom: 0.75rem; color: var(--text-dark);">
+                    送信内容の概要</h3>
+                <table>
+                    <tr>
+                        <th>団体名</th>
+                        <td id="thx-group">-</td>
+                    </tr>
+                    <tr>
+                        <th>責任者氏名</th>
+                        <td id="thx-name">-</td>
+                    </tr>
+                    <tr>
+                        <th>登録人数</th>
+                        <td id="thx-count">-</td>
+                    </tr>
+                    <tr>
+                        <th>合計金額</th>
+                        <td id="thx-amount">-</td>
+                    </tr>
+                </table>
+            </div>
+            <button type="button" class="btn btn-secondary" onclick="window.location.reload();">新しい申込を行う</button>
+        </div>
+
+        <!-- フォーム本体 -->
+        <form id="application-form" onsubmit="handleFormSubmit(event)">
+            <!-- 1. 申込責任者情報 -->
+            <section>
+                <div class="section-title">
+                    申込責任者 情報
+                    <span style="font-size: 0.8rem; font-weight: normal; color: var(--text-light);">※すべての項目が必須です</span>
+                </div>
+                <div class="responsibility-group">
+                    <div class="form-control">
+                        <label for="rep-group">団体名 <span
+                                style="font-size: 0.75rem; font-weight: normal; color: var(--text-light);">（所属団体・クラブがない場合は自由に考えてください）</span></label>
+                        <input type="text" id="rep-group" required placeholder="例：◯◯バドミントンクラブ">
+                        <div class="error-message">団体名を入力してください。</div>
+                    </div>
+                    <div class="form-control">
+                        <label for="rep-address">住所</label>
+                        <input type="text" id="rep-address" required placeholder="例：長野県伊那市下新田○○-○"
+                            oninput="this.value = this.value.replace(/,/g, '');">
+                        <div class="error-message">住所を入力してください。</div>
+                    </div>
+                    <div class="form-control">
+                        <label for="rep-name">氏名</label>
+                        <input type="text" id="rep-name" required placeholder="例：伊那 太郎">
+                        <div class="error-message">責任者氏名を入力してください。</div>
+                    </div>
+                    <div class="form-control">
+                        <label for="rep-tel">電話番号</label>
+                        <input type="tel" id="rep-tel" required placeholder="例：090-1234-5678" pattern="[0-9\-]{10,13}">
+                        <div class="error-message">有効な電話番号を入力してください（例: 090-1234-5678）。</div>
+                    </div>
+                    <div class="form-control full-width">
+                        <label for="rep-email">メールアドレス <span
+                                style="font-weight: normal; color: var(--text-light);">(送信完了後にこのアドレス宛てにPDF控えが自動返信されます)</span></label>
+                        <input type="email" id="rep-email" required placeholder="例：taro@example.com">
+                        <div class="error-message">有効なメールアドレスを入力してください。</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- 2. 参加者登録名簿 -->
+            <section>
+                <div class="section-title">
+                    参加者登録名簿 (最大8ペア・16名)
+                    <span
+                        style="font-size: 0.8rem; font-weight: normal; color: var(--text-light);">※9ペアを超える場合は2回に分けて送信してください。</span>
+                </div>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th class="no-column">No.</th>
+                                <th>フリガナ／氏名</th>
+                                <th style="width: 80px;">性別</th>
+                                <th style="width: 140px;">生年月日</th>
+                                <th style="width: 250px;">団体名または所属先</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- 8ペア（16行）の静的定義 -->
+
+                            <!-- No.1 -->
+                            <tr class="pair-group-odd participant-row" data-pair="1" data-member="1">
+                                <td rowspan="2" class="no-column">1</td>
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+                            <tr class="pair-group-odd participant-row" data-pair="1" data-member="2">
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+
+                            <!-- No.2 -->
+                            <tr class="pair-group-even participant-row" data-pair="2" data-member="1">
+                                <td rowspan="2" class="no-column">2</td>
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+                            <tr class="pair-group-even participant-row" data-pair="2" data-member="2">
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+
+                            <!-- No.3 -->
+                            <tr class="pair-group-odd participant-row" data-pair="3" data-member="1">
+                                <td rowspan="2" class="no-column">3</td>
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+                            <tr class="pair-group-odd participant-row" data-pair="3" data-member="2">
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+
+                            <!-- No.4 -->
+                            <tr class="pair-group-even participant-row" data-pair="4" data-member="1">
+                                <td rowspan="2" class="no-column">4</td>
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+                            <tr class="pair-group-even participant-row" data-pair="4" data-member="2">
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+
+                            <!-- No.5 -->
+                            <tr class="pair-group-odd participant-row" data-pair="5" data-member="1">
+                                <td rowspan="2" class="no-column">5</td>
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+                            <tr class="pair-group-odd participant-row" data-pair="5" data-member="2">
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+
+                            <!-- No.6 -->
+                            <tr class="pair-group-even participant-row" data-pair="6" data-member="1">
+                                <td rowspan="2" class="no-column">6</td>
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+                            <tr class="pair-group-even participant-row" data-pair="6" data-member="2">
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+
+                            <!-- No.7 -->
+                            <tr class="pair-group-odd participant-row" data-pair="7" data-member="1">
+                                <td rowspan="2" class="no-column">7</td>
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+                            <tr class="pair-group-odd participant-row" data-pair="7" data-member="2">
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+
+                            <!-- No.8 -->
+                            <tr class="pair-group-even participant-row" data-pair="8" data-member="1">
+                                <td rowspan="2" class="no-column">8</td>
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+                            <tr class="pair-group-even participant-row" data-pair="8" data-member="2">
+                                <td>
+                                    <div class="input-pair-cell">
+                                        <input type="text" class="participant-input input-kana"
+                                            placeholder="フリガナ (カタカナ)"
+                                            oninput="sanitizeKatakana(this); calculateTotal();">
+                                        <input type="text" class="participant-input input-name" placeholder="氏名"
+                                            oninput="calculateTotal();">
+                                    </div>
+                                </td>
+                                <td>
+                                    <select class="participant-input input-gender" onchange="calculateTotal();">
+                                        <option value="">選択</option>
+                                        <option value="男">男</option>
+                                        <option value="女">女</option>
+                                    </select>
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-birthdate"
+                                        placeholder="YYYY/MM/DD" maxlength="10"
+                                        oninput="formatBirthdate(this); calculateTotal();">
+                                </td>
+                                <td>
+                                    <input type="text" class="participant-input input-address"
+                                        placeholder="団体名または所属先 (クラブ名、勤務先、学校名など)"
+                                        oninput="this.value = this.value.replace(/,/g, '');">
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- 3. 下部自動計算 & 合計金額表示 -->
+            <div class="summary-container">
+                <div class="summary-notes">
+                    <p><strong>※参加料は事前のお支払いをお願いします。こちらの申し込み完了後に送付先をメールアドレスにご案内いたします。</strong></p>
+                    <p style="font-size: 0.8rem; margin-top: 4px; color: var(--text-light);">※「送信する」を押したあとに申し込み完了の連絡がメールアドレスに送付されます。</p>
+                    <p style="font-size: 0.8rem; margin-top: 4px; color: var(--text-light);">
+                        ※名簿の「フリガナ」または「氏名」に入力のある行を1名として自動カウントします。</p>
+                </div>
+                <div class="summary-calculation">
+                    <div class="calc-formula">
+                        参加者数: <span id="total-participants">0</span>
+                    </div>
+                    <div class="calc-total">
+                        <span class="calc-total-text">合計金額: </span>¥<span id="total-amount" class="amount-num">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 4. アクションボタン -->
+            <div class="actions-group">
+                <button type="button" class="btn btn-secondary" onclick="window.print()">
+                    <svg viewBox="0 0 24 24">
+                        <path
+                            d="M19 8H5c-1.66 0-3 1.34-3 3v6h4v4h12v-4h4v-6c0-1.66-1.34-3-3-3zm-3 11H8v-5h8v5zm3-7c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm-1-9H6v4h12V3z" />
+                    </svg>
+                    印刷・PDF保存
+                </button>
+                <button type="submit" id="submit-btn" class="btn btn-primary">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M2.01 21L23 12 2.01 3 2 10l15 2-15 2z" />
+                    </svg>
+                    送信する
+                </button>
+            </div>
+        </form>
+
+        <!-- 印刷時のみに出力されるフッター番号 -->
+        <div class="print-footer-number">1 2</div>
+    </div>
+
+    <script>
+        // ==========================================================================
+        // GAS (Google Apps Script) 連携設定
+        // ==========================================================================
+        // ユーザー様がGASウェブアプリをデプロイした後に、発行されたURLを以下に設定してください。
+        const GAS_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbyWhT8f-3lH1lpjtH-yJcFPx3O-H4TvaqL2djp-MR2cICtzwET3pGHawGMawjv7ycEV/exec";
+
+        // 1人あたりの参加料（GAS側の ENTRY_FEE と必ず一致させること）
+        const ENTRY_FEE = 1500;
+
+        /**
+         * ひらがなをカタカナに自動変換し、カタカナ・長音符・スペース以外の不正文字をチェック
+         */
+        function sanitizeKatakana(input) {
+            const val = input.value;
+
+            // カタカナ・長音・スペース（全角含む）のみ許可
+            const regex = /^[ァ-ヶー\s　]*$/;
+            if (val !== '' && !regex.test(val)) {
+                input.classList.add('invalid');
+            } else {
+                input.classList.remove('invalid');
+            }
+        }
+
+        /**
+         * 生年月日入力時の自動スラッシュ挿入
+         */
+        function formatBirthdate(input) {
+            let val = input.value.replace(/\D/g, ''); // 数字以外を除去
+
+            if (val.length > 8) {
+                val = val.substring(0, 8);
+            }
+
+            // YYYY/MM/DDの形式へ整形
+            if (val.length > 4) {
+                if (val.length > 6) {
+                    val = val.substring(0, 4) + '/' + val.substring(4, 6) + '/' + val.substring(6);
+                } else {
+                    val = val.substring(0, 4) + '/' + val.substring(4);
+                }
+            }
+
+            input.value = val;
+            validateDate(input);
+        }
+
+        /**
+         * 日付の妥当性バリデーション (YYYY/MM/DD)
+         */
+        function validateDate(input) {
+            const val = input.value;
+            if (val === '') {
+                input.classList.remove('invalid');
+                return;
+            }
+
+            const regex = /^\d{4}\/\d{2}\/\d{2}$/;
+            if (!regex.test(val)) {
+                input.classList.add('invalid');
+                return;
+            }
+
+            // カレンダー上の有効な日付かを検証
+            const parts = val.split('/');
+            const year = parseInt(parts[0], 10);
+            const month = parseInt(parts[1], 10) - 1;
+            const day = parseInt(parts[2], 10);
+
+            const date = new Date(year, month, day);
+
+            if (date.getFullYear() === year && date.getMonth() === month && date.getDate() === day) {
+                // 現在日付より未来でないか、および120歳以上離れていないかの範囲チェック
+                const currentYear = new Date().getFullYear();
+                if (year > currentYear || year < currentYear - 120) {
+                    input.classList.add('invalid');
+                } else {
+                    input.classList.remove('invalid');
+                }
+            } else {
+                input.classList.add('invalid');
+            }
+        }
+
+        /**
+         * 入力された有効な参加者数を数え、リアルタイムで合計金額を計算
+         */
+        function calculateTotal() {
+            let count = 0;
+            const rows = document.querySelectorAll('.participant-row');
+
+            rows.forEach(row => {
+                const nameInput = row.querySelector('.input-name');
+                const kanaInput = row.querySelector('.input-kana');
+                const genderSelect = row.querySelector('.input-gender');
+                const birthdateInput = row.querySelector('.input-birthdate');
+
+                // 氏名またはフリガナのどちらかに入力があれば参加者としてカウント
+                const hasName = nameInput.value.trim() !== '';
+                const hasKana = kanaInput.value.trim() !== '';
+
+                if (hasName || hasKana) {
+                    count++;
+
+                    // 参加者行に対して、氏名/フリガナ入力時は性別・生年月日の入力を求める
+                    if (genderSelect.value === '') {
+                        genderSelect.classList.add('invalid');
+                    } else {
+                        genderSelect.classList.remove('invalid');
+                    }
+
+                    if (birthdateInput.value === '') {
+                        birthdateInput.classList.add('invalid');
+                    }
+                } else {
+                    // 空白行の場合はバリデーションエラーを解除
+                    genderSelect.classList.remove('invalid');
+                    birthdateInput.classList.remove('invalid');
+                }
+            });
+
+            // 画面および印刷用のデータ反映
+            document.getElementById('total-participants').textContent = count;
+            document.getElementById('total-amount').textContent = (count * ENTRY_FEE).toLocaleString();
+        }
+
+        /**
+         * 送信時の全体バリデーションと処理 (GAS連携版)
+         */
+        function handleFormSubmit(event) {
+            event.preventDefault();
+
+            // 1. エラーリセット
+            const invalidFields = document.querySelectorAll('.invalid');
+            invalidFields.forEach(field => field.classList.remove('invalid'));
+
+            let hasError = false;
+
+            // 2. 責任者情報の検証
+            const repFields = ['rep-group', 'rep-address', 'rep-name', 'rep-tel', 'rep-email'];
+            repFields.forEach(id => {
+                const el = document.getElementById(id);
+                if (!el.value.trim() || (id === 'rep-tel' && !el.checkValidity()) || (id === 'rep-email' && !el.checkValidity())) {
+                    el.classList.add('invalid');
+                    hasError = true;
+                }
+            });
+
+            // 3. 参加者情報の検証
+            let participantCount = 0;
+            const participantsData = [];
+            const rows = document.querySelectorAll('.participant-row');
+
+            rows.forEach((row, index) => {
+                const nameInput = row.querySelector('.input-name');
+                const kanaInput = row.querySelector('.input-kana');
+                const genderSelect = row.querySelector('.input-gender');
+                const birthdateInput = row.querySelector('.input-birthdate');
+                const addressInput = row.querySelector('.input-address');
+
+                const hasName = nameInput.value.trim() !== '';
+                const hasKana = kanaInput.value.trim() !== '';
+
+                if (hasName || hasKana) {
+                    participantCount++;
+
+                    // ペア内の入力漏れチェック
+                    if (!hasName) {
+                        nameInput.classList.add('invalid');
+                        hasError = true;
+                    }
+                    if (!hasKana || kanaInput.classList.contains('invalid')) {
+                        kanaInput.classList.add('invalid');
+                        hasError = true;
+                    }
+                    if (genderSelect.value === '') {
+                        genderSelect.classList.add('invalid');
+                        hasError = true;
+                    }
+                    if (birthdateInput.value === '' || birthdateInput.classList.contains('invalid')) {
+                        birthdateInput.classList.add('invalid');
+                        hasError = true;
+                    }
+
+                    // 送信用配列に追加
+                    participantsData.push({
+                        pairNo: row.getAttribute('data-pair'),
+                        memberNo: row.getAttribute('data-member'),
+                        kana: kanaInput.value.trim(),
+                        name: nameInput.value.trim(),
+                        gender: genderSelect.value,
+                        birthdate: birthdateInput.value.trim(),
+                        address: addressInput.value.trim()
+                    });
+                }
+            });
+
+            // 4. 最低1名の登録チェック
+            if (participantCount === 0) {
+                alert('参加者名簿に最低1名以上の登録が必要です。');
+                return;
+            }
+
+            if (hasError) {
+                alert('入力内容に不備があります。赤枠で表示された項目を確認してください。');
+
+                // 最初のエラー要素にスクロール
+                const firstError = document.querySelector('.invalid');
+                if (firstError) {
+                    firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    firstError.focus();
+                }
+                return;
+            }
+
+            // 5. 送信データのオブジェクト化
+            const payload = {
+                repGroup: document.getElementById('rep-group').value.trim(),
+                repAddress: document.getElementById('rep-address').value.trim(),
+                repName: document.getElementById('rep-name').value.trim(),
+                repTel: document.getElementById('rep-tel').value.trim(),
+                repEmail: document.getElementById('rep-email').value.trim(),
+                totalParticipants: participantCount,
+                totalAmount: participantCount * ENTRY_FEE,
+                participants: participantsData
+            };
+
+            // 6. GAS Web Appへの送信処理
+            const loadingScreen = document.getElementById('loading-screen');
+            loadingScreen.classList.add('active'); // ローディング表示ON
+
+            if (GAS_WEBAPP_URL === "YOUR_GAS_WEBAPP_URL_HERE") {
+                // URLが未設定の場合はシミュレーション動作（テスト用）
+                setTimeout(() => {
+                    loadingScreen.classList.remove('active');
+                    showThanksPage(payload);
+                    alert('【シミュレーション動作】\nGASウェブアプリURLが未設定のため、実際のデータ保存とメール送信はスキップされました。\nURLを設定すると実際にスプレッドシートへの保存と自動返信メールが行われます。');
+                }, 1500);
+            } else {
+                // 実際のGAS Web Appへの送信
+                fetch(GAS_WEBAPP_URL, {
+                    method: "POST",
+                    mode: "no-cors", // CORSエラー回避
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(payload)
+                })
+                    .then(() => {
+                        loadingScreen.classList.remove('active');
+                        showThanksPage(payload);
+                    })
+                    .catch(error => {
+                        loadingScreen.classList.remove('active');
+                        console.error("Error sending data to GAS:", error);
+                        alert("送信中にエラーが発生しました。ネットワーク接続を確認し、もう一度お試しください。");
+                    });
+            }
+        }
+
+        /**
+         * 送信完了後のサンクス画面表示切り替え
+         */
+        function showThanksPage(data) {
+            // ヘッダーとフォーム本体を非表示にする
+            document.querySelector('header p.subtitle').style.display = 'none';
+            document.getElementById('application-form').style.display = 'none';
+
+            // サンクス画面内のサマリーを埋める
+            document.getElementById('thx-group').textContent = data.repGroup;
+            document.getElementById('thx-name').textContent = data.repName;
+            document.getElementById('thx-count').textContent = data.totalParticipants + " 名";
+            document.getElementById('thx-amount').textContent = "¥" + data.totalAmount.toLocaleString();
+
+            // サンクス画面をアクティブにする
+            document.getElementById('thanks-screen').classList.add('active');
+
+            // トップにスクロール
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    </script>
+
+</body>
+
+</html>

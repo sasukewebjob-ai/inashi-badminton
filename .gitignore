@@ -1,0 +1,7 @@
+# GitHub Pages 公開リポジトリには index.html のみを含める。
+# GAS スクリプトや clasp 設定（scriptId / WebApp URL）は公開しない。
+gas_script.js
+appsscript.json
+.clasp.json
+.claspignore
+*.pdf
