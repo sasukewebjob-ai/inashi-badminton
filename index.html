@@ -113,6 +113,36 @@
             justify-content: space-between;
         }
 
+        /* スマホでは見出しと注記を縦積みにして、見出しを横いっぱいに自然表示する */
+        @media (max-width: 768px) {
+            .section-title {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 0.4rem;
+            }
+        }
+
+        /* 名簿のランク順 注意書き（赤字） */
+        .rank-warning {
+            color: var(--error-color);
+            font-weight: 700;
+            font-size: 0.95rem;
+            margin: -0.5rem 0 1.5rem;
+        }
+
+        /* 送信前確認モーダルのランク順 注意 */
+        .modal-rank-note {
+            background: #fef2f2;
+            border: 1px solid #fecaca;
+            color: var(--error-color);
+            font-weight: 700;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            border-radius: 8px;
+            padding: 0.6rem 0.8rem;
+            margin: 0 0 1.25rem;
+        }
+
         .responsibility-group {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -915,6 +945,9 @@
             .error-message,
             .responsibility-group label,
             .section-title span,
+            .rank-warning,
+            .missing-checklist,
+            .draft-banner,
             .loading-overlay,
             .thanks-container {
                 display: none !important;
@@ -1204,6 +1237,7 @@
         <div class="modal-card">
             <h2 class="modal-title" id="confirm-modal-title">この内容で送信します</h2>
             <p class="modal-lead">特に<strong>メールアドレス</strong>に間違いがないかご確認ください。控えのPDFがこのアドレス宛てに届きます。</p>
+            <p class="modal-rank-note">⚠ ペアは「ランク順」で入力されていますか？ 順番が違うと組み合わせに影響します。</p>
             <table class="modal-summary">
                 <tr><th>団体名</th><td id="cf-group">-</td></tr>
                 <tr><th>責任者氏名</th><td id="cf-name">-</td></tr>
@@ -1315,6 +1349,7 @@
                     <span
                         style="font-size: 0.8rem; font-weight: normal; color: var(--text-light);">※9ペアを超える場合は2回に分けて送信してください。</span>
                 </div>
+                <p class="rank-warning">⚠ 必ずランク順でペアを入力してください。</p>
 
                 <div class="table-container">
                     <table>
