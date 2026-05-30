@@ -229,6 +229,16 @@
             background-color: #f9fafb;
         }
 
+        /* ペアごとに薄い背景色を変え、同じペアの入力行が一目で分かるようにする（PC・スマホ共通） */
+        .table-container tr.participant-row[data-pair="1"] { background-color: #fde8e8; } /* 薄い赤 */
+        .table-container tr.participant-row[data-pair="2"] { background-color: #ffedd5; } /* 薄いオレンジ */
+        .table-container tr.participant-row[data-pair="3"] { background-color: #fef9c3; } /* 薄い黄 */
+        .table-container tr.participant-row[data-pair="4"] { background-color: #dcfce7; } /* 薄い緑 */
+        .table-container tr.participant-row[data-pair="5"] { background-color: #cffafe; } /* 薄い水色 */
+        .table-container tr.participant-row[data-pair="6"] { background-color: #dbeafe; } /* 薄い青 */
+        .table-container tr.participant-row[data-pair="7"] { background-color: #e0e7ff; } /* 薄い藤色 */
+        .table-container tr.participant-row[data-pair="8"] { background-color: #fce7f3; } /* 薄いピンク */
+
         .no-column {
             text-align: center;
             vertical-align: middle;
@@ -637,7 +647,7 @@
                 content: "生年月日 (例: 1995/04/01)";
             }
             .table-container tr[data-member="1"] td:nth-child(5)::before {
-                content: "団体名または所属先 (ない場合は自由に)";
+                content: "団体名または所属先";
             }
 
             /* 2人目のメンバー用の項目ラベル */
@@ -651,7 +661,7 @@
                 content: "生年月日 (例: 1995/04/01)";
             }
             .table-container tr[data-member="2"] td:nth-child(4)::before {
-                content: "団体名または所属先 (ない場合は自由に)";
+                content: "団体名または所属先";
             }
 
             /* フリガナと氏名の入力エリアを縦に並べて押しやすさを向上 */
